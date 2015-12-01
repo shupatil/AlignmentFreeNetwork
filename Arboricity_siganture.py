@@ -33,7 +33,7 @@ for graphindex in range(0,len(graphList)):
             subg = graphList[graphindex][0].subgraph(sub_nodes)
             if nx.is_connected(subg):
                 print subg.edges()
-                m=len(subg.edges())/n
+                m=len(subg.edges())/(n-1)
                 if max<m:
                     max=m
     #results1 = [graphList[graphindex][0].to_string(),max]
