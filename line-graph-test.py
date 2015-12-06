@@ -2,6 +2,7 @@ from __future__ import division
 from optparse import OptionParser
 from collections import deque
 from math import log
+from sklearn.metrics import precision_recall_curve
 import argparse
 import os
 import sys,time,logging,random
@@ -210,7 +211,7 @@ def main():
     # Graph is the original Graph
     Graph = snap.GenRndGnm(snap.PUNGraph, Nodes, Edges)
     edgeFilename = './'+name+'/'+'origedgeList.txt'
-    #os.system("mkdir "+name)
+    os.system("mkdir "+name)
     snap.SaveEdgeList(Graph, edgeFilename)
 
     # This is the first copy of the graph without any rewiring
@@ -245,6 +246,9 @@ def main():
     ref = np.ones(len(distance_matrix1))
 
     print distance_matrix1
+    precision, recall, thresholds = precision_recall_curve(distance_matrix1, ref)
+    plt.plot(recall,precision,label='precision recall curve')
+    plt.show()
 """
     min1 = 1.0
     for i in range(0,rewire):
