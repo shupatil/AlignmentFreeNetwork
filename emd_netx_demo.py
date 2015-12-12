@@ -5,7 +5,7 @@ import networkx as nx
 import numpy as np
 from pyemd import emd
 #creating new graph
-G= nx.Graph();
+#G= nx.Graph();
 
 G=nx.Graph()
 G.add_edge('a','b',weight=12)
@@ -74,7 +74,7 @@ sig_np = []
 '''z = np.zeros((2,2))
 z /= z.max()'''
 z = []
-z.append([1.0])
+z.append([2.0])
 
 j = emd(np.array(signature[0]), np.array(signature[1]),np.array(z))
 print j
