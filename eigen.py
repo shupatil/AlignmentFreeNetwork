@@ -109,12 +109,12 @@ for i in  range(0,num_graphs):
 		print 'round:'+str(round(ret,8))
 		distance_matrix[i][j] = ret
             	distance_matrix[j][i] = distance_matrix[i][j]
-#		if (ret<1):
-#			distance_matrix1.append(1)
-#		else:
-#			distance_matrix1.append(0)
+		if (ret<1):
+			distance_matrix1.append(0)
+		else:
+			distance_matrix1.append(1)
 print distance_matrix1
-ref = np.(len(distance_matrix1))
+ref = np.ones(len(distance_matrix1))
 precision, recall, thresholds = precision_recall_curve(ref,distance_matrix1)
 plt.plot(recall,precision,label='precision recall curve')
 plt.show()
