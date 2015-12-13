@@ -3,6 +3,7 @@ from optparse import OptionParser
 from collections import deque
 from math import log
 from sklearn.metrics import precision_recall_curve
+from sklearn.metrics import roc_auc_score
 import argparse
 import os
 from os import listdir
@@ -205,19 +206,19 @@ def main():
 
     # This is the first copy of the graph without any rewiring
     #print 'Drawing the Graph'
-    Gnet_X = nx.read_edgelist("./dataset_3/ER_1000_0.01_1.txt")
+    #Gnet_X = nx.read_edgelist("./dataset_3/ER_1000_0.01_1.txt")
     #plt.figure(1)
     #nx.draw(Gnet_X)    
     #plt.show()
-    s = gen_sig(Gnet_X)
+    #s = gen_sig(Gnet_X)
     #dataset = [1,3]
     
-    Gnet_Y = nx.read_edgelist("./dataset_3/ER_1000_0.01_2.txt")
+    #Gnet_Y = nx.read_edgelist("./dataset_3/ER_1000_0.01_2.txt")
     #plt.figure(1)
     #nx.draw(Gnet_X)    
     #plt.show()
-    t = gen_sig(Gnet_Y)
-    distance_matrix = np.ones((20,20))
+    #t = gen_sig(Gnet_Y)
+    distance_matrix = np.ones((40,40))
     distance_matrix1 = []
     Graph_List = []
     #for i in dataset:
@@ -239,33 +240,50 @@ def main():
 		#    dic_list.append(key_1)
 		 #   dic_list.append(key_2)
             model_name_i = filename_inner.split('_')[0]
-	    if(j > i):
-                #print "filename 2:",filename_inner
-	        G_2 = nx.read_edgelist(folder_name+filename_inner)
+            if model_name_i == model_name_o:
+		ref.append(1)
+		if not(filename_inner==filename_out):
+		    G_2 = nx.read_edgelist(folder_name+filename_inner)
+	            t = gen_sig(G_2)
+	            sim = compare_sig(s,t)
+     		    distance_matrix1.append(sim)
+		else:
+		    distance_matrix1.append(1)
+	    else:
+		ref.append(0)
+		G_2 = nx.read_edgelist(folder_name+filename_inner)
 	        t = gen_sig(G_2)
 	        sim = compare_sig(s,t)
+     		distance_matrix1.append(sim)
+
+	    #if(j >= i):
+                #print "filename 2:",filename_inner
+	    #    G_2 = nx.read_edgelist(folder_name+filename_inner)
+	    #    t = gen_sig(G_2)
+	    #    sim = compare_sig(s,t)
                 #print sim
-	        distance_matrix[i][j] = sim
-		if (sim < 0.95):
-		    distance_matrix[i][j] = sim - 0.5
-		distance_matrix[j][i] = distance_matrix[i][j]
-	        distance_matrix1.append(distance_matrix[i][j])
-	        if(model_name_i == model_name_o):
-	            ref.append(1)
-	        else:
-		    ref.append(0)
-	    j = j+1
-        j = 0
-        i = i+1
+	    #    distance_matrix[i][j] = sim
+	#	if (sim < 0.95):
+	#	    distance_matrix[i][j] = sim - 0.5
+	#	distance_matrix[j][i] = distance_matrix[i][j]
+	 #       distance_matrix1.append(distance_matrix[i][j])
+	  #      if(model_name_i == model_name_o):
+	   #         ref.append(1)
+	    #    else:
+		#    ref.append(0)
+	    #j = j+1
+        #j = 0
+        #i = i+1
 
     print "ref is ",ref
     #print distance_matrix1
-    for i in range(0,20):
-	print distance_matrix[i]
-
+    #for i in range(0,20):
+	#print distance_matrix[i]
+    print "auc: ",roc_auc_score(np.array(ref),np.array(distance_matrix1))
     precision, recall, thresholds = precision_recall_curve(np.array(ref), np.array(distance_matrix1))
-    plt.plot(recall,precision,label='precision recall curve')
+    plt.plot(recall,precision,label='precision recall curve')    
     plt.show()
+
 
 """
     distance_matrix = np.ones((2,2))
