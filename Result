@@ -1,0 +1,6 @@
+Line Graph:
+40 graphs(100 nodes) : 0.989143
+80 graphs(100 nodes) : 0.989814
+20 graphs(1000 nodes) : 0.998566
+80 graohs(1000 nodes): 0.999326
+280 graphs(100 nodes): 0.9899
