@@ -49,7 +49,7 @@ model_names = []
 #Reference Dataset
 dic_list = []
 for i in dataset:
-	folder_name = '/home/deepika/AlignmentFreeNetwork/comsig-master/dataset_'+str(i) + '/'
+	folder_name = './dataset_'+str(i) + '/'
 	filenames = [f for f in listdir(folder_name)]
 	for filename_out in filenames:
 		count_filenames = count_filenames + 1
