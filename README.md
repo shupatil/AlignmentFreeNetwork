@@ -9,7 +9,8 @@ This repo contains code for alignment free network comparison. There are two mai
 - Dataset can be generated using following command.
 	python data_generator_rewire.py --N 100 --rho 0.1 --num 3 --seed 10
 
-- then python line-test-graph1.py or python eigen.py
+- then python line_graph.py(for line graph) and 
+- python eigen.py (for eigen values)
 
 NOTE: for line graph signature, dataset is taken from the folder "datatset_3" only. ONe should generate dataset in that folder to run this code.
 
